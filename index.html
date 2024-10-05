@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juhon Massi Pankki - Kirjaudu sisään</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Mock user credentials
+        const userCredentials = {
+            username: "user",
+            password: "password"
+        };
+
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const usernameInput = document.getElementById("username").value;
+            const passwordInput = document.getElementById("password").value;
+
+            // Check if the credentials match
+            if (usernameInput === userCredentials.username && passwordInput === userCredentials.password) {
+                // Redirect to the main bank interface
+                window.location.href = "bank.html"; // Change this to the filename of your main bank interface
+            } else {
+                alert("Virheellinen käyttäjätunnus tai salasana!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Juhon Massi Pankki</h1>
+    </header>
+
+    <main>
+        <h2>Kirjaudu sisään</h2>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div>
+                <label for="username">Käyttäjätunnus:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div>
+                <label for="password">Salasana:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Kirjaudu sisään</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 Juhon Massi Pankki</p>
+    </footer>
+</body>
+</html>

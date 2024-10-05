@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juhon Massi Pankki</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const saldoInput = document.getElementById("saldo");
+            const paivitaSaldoBtn = document.getElementById("paivitaSaldo");
+            const nykyinenSaldoDisplay = document.getElementById("nykyinenSaldo");
+
+            let saldo = 0;
+
+            paivitaSaldoBtn.addEventListener("click", () => {
+                const uusiSaldo = parseFloat(saldoInput.value);
+                if (!isNaN(uusiSaldo)) {
+                    saldo = uusiSaldo;
+                    nykyinenSaldoDisplay.textContent = saldo;
+                    saldoInput.value = ""; // Tyhjennä syöttökenttä
+                } else {
+                    alert("Syötä kelvollinen saldo!");
+                }
+            });
+
+            const lainaSummaInput = document.getElementById("lainaSumma");
+            const haeLainaBtn = document.getElementById("haeLaina");
+
+            haeLainaBtn.addEventListener("click", () => {
+                const lainaSumma = parseFloat(lainaSummaInput.value);
+                if (!isNaN(lainaSumma) && lainaSumma > 0) {
+                    // Avaa uusi välilehti kiitosviestillä
+                    const messageWindow = window.open("", "_blank");
+                    messageWindow.document.write(`
+                        <html>
+                        <head>
+                            <title>Kiitos hakemuksesta</title>
+                        </head>
+                        <body>
+                            <h1>Kiitos lainahakemuksestasi!</h1>
+                            <p Olet hakenut lainaa summalle: <strong>${lainaSumma} Ronja Massia</strong>.</p>
+                            <p Hakemuksesi käsitellään mahdollisimman pian.</p>
+                        </body>
+                        </html>
+                    `);
+                    lainaSummaInput.value = ""; // Tyhjennä syöttökenttä
+                } else {
+                    alert("Syötä kelvollinen laina-summa!");
+                }
+            });
+
+            const kortinNumeroDisplay = document.getElementById("kortinNumero");
+            const generoiKorttiBtn = document.getElementById("generoiKortti");
+
+            generoiKorttiBtn.addEventListener("click", () => {
+                const kortinNumero = generateRandomCardNumber();
+                kortinNumeroDisplay.textContent = kortinNumero;
+            });
+
+            function generateRandomCardNumber() {
+                const prefix = '4'; // Visa-korttien prefix
+                const randomNumber = Math.floor(Math.random() * 10000000000000000); // 16-numeroinen
+                return prefix + randomNumber.toString().padStart(15, '0').slice(0, 15); // Padded ja sliced 15 numeroon
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Tervetuloa Juhon Massi Pankkiin!</h1>
+        <nav>
+            <ul>
+                <li><a href="#tilit">Tilit</a></li>
+                <li><a href="#lainat">Lainat</a></li>
+                <li><a href="#kortit">Kortit</a></li>
+                <li><a href="#yhteys">Yhteystiedot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="tilit">
+        <h2>Tilit ja saldot</h2>
+        <div>
+            <label for="saldo">Syötä saldo: </label>
+            <input type="number" id="saldo" placeholder="Syötä saldo">
+            <button id="paivitaSaldo">Päivitä saldo</button>
+        </div>
+        <p>Nykyinen saldo: <span id="nykyinenSaldo">0</span> Ronja Massia</p>
+    </section>
+
+    <section id="lainat">
+        <h2>Lainat</h2>
+        <div>
+            <label for="lainaSumma">Hae laina (Ronja Massia): </label>
+            <input type="number" id="lainaSumma" placeholder="Syötä laina-summa">
+            <button id="haeLaina">Lähetä lainahakemus</button>
+        </div>
+    </section>
+
+    <section id="kortit">
+        <h2>Kortit</h2>
+        <p>Olet saanut kortin numerolla: <span id="kortinNumero"></span></p>
+        <button id="generoiKortti">Generoi uusi kortti</button>
+    </section>
+
+    <section id="yhteys">
+        <h2>Yhteystiedot</h2>
+        <p>Ota yhteyttä pankkiin kysymyksillä tai ongelmatilanteissa.</p>
+    </section>
+
+    <footer>
+        <p>© 2024 Juhon Massi Pankki</p>
+    </footer>
+</body>
+</html>
